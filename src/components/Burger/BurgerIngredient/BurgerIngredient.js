@@ -38,7 +38,7 @@ class BurderIngredient extends Component {
   }
 }
 
-BurderIngredient.PropTypes = {
+BurderIngredient.propTypes = {
   type: PropTypes.string.isRequired
 };
 
