@@ -8,11 +8,63 @@ import { withRouter } from "react-router-dom";
 
 class ContactData extends Component {
   state = {
-    name: "",
-    email: "",
-    address: {
-      street: "",
-      postalCode: ""
+    orderForm: {
+      name: {
+        elementType: "input",
+        elementConfig: {
+          type: "text",
+          placeholder: "Your Name"
+        },
+        value: ""
+      },
+      street: {
+        elementType: "input",
+        elementConfig: {
+          type: "text",
+          placeholder: "Street"
+        },
+        value: ""
+      },
+      zipcode: {
+        elementType: "input",
+        elementConfig: {
+          type: "text",
+          placeholder: "ZIP Code"
+        },
+        value: ""
+      },
+      country: {
+        elementType: "input",
+        elementConfig: {
+          type: "text",
+          placeholder: "Country"
+        },
+        value: ""
+      },
+      emailId: {
+        elementType: "email",
+        elementConfig: {
+          type: "text",
+          placeholder: "Your Email"
+        },
+        value: ""
+      },
+      deliveryMethod: {
+        elementType: "select",
+        elementConfig: {
+          options: [
+            {
+              value: "fastest",
+              displayValue: "Fastest"
+            },
+            {
+              value: "cheapest",
+              displayValue: "Cheapest"
+            }
+          ]
+        },
+        value: ""
+      }
     },
     loading: false
   };
@@ -25,17 +77,7 @@ class ContactData extends Component {
     });
     const order = {
       ingredients: this.props.ingredients,
-      price: this.props.price,
-      customer: {
-        name: "Shivam Kumar",
-        address: {
-          street: "Teststreet12",
-          zipcode: "122017",
-          country: "India"
-        },
-        emailId: "test@test.com"
-      },
-      deliveryMethod: "fastest"
+      price: this.props.price
     };
     console.log(order);
     axios
@@ -52,40 +94,23 @@ class ContactData extends Component {
       });
   };
   render() {
+    const formElementsArr = [];
+    for (let key in this.state.orderForm) {
+      formElementsArr.push({
+        id: key,
+        config: this.state.orderForm[key]
+      });
+    }
     let form = (
       <form action="">
-        <Input
-          inputtype="input"
-          type="text"
-          name="name"
-          id="name"
-          placeholder="Your name"
-          label="Name"
-        />
-        <Input
-          inputtype="input"
-          type="email"
-          name="email"
-          id="email"
-          placeholder="Your Email"
-          label="Email Address"
-        />
-        <Input
-          inputtype="input"
-          type="text"
-          name="street"
-          id="street"
-          placeholder="Your Street"
-          label="Street"
-        />
-        <Input
-          inputtype="input"
-          type="text"
-          name="postalCode"
-          id="postalCode"
-          placeholder="Your Postal Code"
-          label="Postal Code"
-        />
+        {formElementsArr.map(formElement => (
+          <Input
+            key={formElement.id}
+            elementType={formElement.config.elementType}
+            elementConfig={formElement.config.elementConfig}
+            value={formElement.config.value}
+          />
+        ))}
         <Button btnType="Success" clicked={this.orderHandler}>
           ORDER
         </Button>
