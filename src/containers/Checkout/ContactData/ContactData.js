@@ -3,6 +3,7 @@ import Button from "../../../components/UI/Button/Button";
 import classes from "./ContactData.css";
 import axios from "../../../axios-orders";
 import Spinner from "../../../components/UI/Spinner/Spinner";
+import Input from "../../../components/UI/Input/Input";
 import { withRouter } from "react-router-dom";
 
 class ContactData extends Component {
@@ -53,33 +54,37 @@ class ContactData extends Component {
   render() {
     let form = (
       <form action="">
-        <input
+        <Input
+          inputtype="input"
           type="text"
           name="name"
           id="name"
           placeholder="Your name"
-          className={classes.Input}
+          label="Name"
         />
-        <input
+        <Input
+          inputtype="input"
           type="email"
           name="email"
           id="email"
           placeholder="Your Email"
-          className={classes.Input}
+          label="Email Address"
         />
-        <input
+        <Input
+          inputtype="input"
           type="text"
           name="street"
           id="street"
           placeholder="Your Street"
-          className={classes.Input}
+          label="Street"
         />
-        <input
+        <Input
+          inputtype="input"
           type="text"
           name="postalCode"
           id="postalCode"
           placeholder="Your Postal Code"
-          className={classes.Input}
+          label="Postal Code"
         />
         <Button btnType="Success" clicked={this.orderHandler}>
           ORDER
