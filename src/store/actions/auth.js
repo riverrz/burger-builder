@@ -22,7 +22,7 @@ export const authFail = error => {
   };
 };
 
-export const auth = (email, password) => {
+export const auth = (email, password, isSignup) => {
   return dispatch => {
     // authenticate the user
     dispatch(authStart());
@@ -31,11 +31,12 @@ export const auth = (email, password) => {
       password,
       returnSecureToken: true
     };
+    let url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${keys.FIREBASE_AUTH_API_KEY}`;
+    if (!isSignup) {
+      url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${keys.FIREBASE_AUTH_API_KEY}`;
+    }
     axios
-      .post(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${keys.FIREBASE_AUTH_API_KEY}`,
-        authData
-      )
+      .post(url, authData)
       .then(response => {
         console.log(response);
         dispatch(authSuccess(response.data));
